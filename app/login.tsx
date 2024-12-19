@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { View, Text, Alert, TextInput, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import axios from "axios";
+import handleLogin from "@/src/query/login";
+import { saveToken } from "@/src/auth/SecureStore";
+import { useRouter } from "expo-router";
 type loginData = {
   email: string;
   password: string;
@@ -54,10 +57,11 @@ const Login = () => {
       return;
     }
     console.log("Data being sent:", data);
+    const router = useRouter();
 
     try {
       const response = await axios.post(
-        "http://192.168.1.67:3000/auth/login",
+        "http://192.168.1.91:5000/auth/login",
         data,
         {
           headers: {
@@ -66,7 +70,11 @@ const Login = () => {
         }
       );
       Alert.alert("Success", "Registration successful!");
-      console.log(response.data);
+      // Extrae el token de la respuesta
+      const { message, token, user } = response.data;
+      console.log(message, token, user);
+      await saveToken(token);
+      router.replace("/main");
     } catch (error) {
       console.log(error);
       const errorMessage =

@@ -1,11 +1,24 @@
-import { Link } from "expo-router";
+import { getStoredToken } from "@/src/auth/SecureStore";
+import { Link, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import { Appearance, useColorScheme } from "react-native";
 import { Pressable, Text, View, Image } from "react-native";
 
 export default function App() {
   const colorScheme = useColorScheme() || Appearance.getColorScheme();
   const isDarkMode = colorScheme === "dark";
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = await getStoredToken();
+      if (token) {
+        router.replace("/main");
+      }
+    };
+    checkAuth();
+  }, [router]);
 
   return (
     <View
