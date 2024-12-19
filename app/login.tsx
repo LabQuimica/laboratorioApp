@@ -61,7 +61,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.1.91:5000/auth/login",
+        "http://192.168.22.88:5000/auth/login",
         data,
         {
           headers: {
@@ -73,7 +73,7 @@ const Login = () => {
       console.log(response.data);
       console.log(response.data.token);
       await saveToken(response.data.token);
-      router.push("/main");
+      router.push("main");
     } catch (error) {
       console.log(error);
       const errorMessage =

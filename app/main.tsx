@@ -3,9 +3,8 @@ import { clearTokens } from "@/src/auth/SecureStore";
 import { useRouter } from "expo-router";
 import { View, Text, TextInput, Pressable, Alert } from "react-native";
 
-const MainScreen: React.FC = () => {
+export default function Main() {
   const router = useRouter();
-
 
   const handleSubmit = async () => {
     try {
@@ -14,19 +13,15 @@ const MainScreen: React.FC = () => {
     } catch (error) {
       console.error("Failed to logout:", error);
     }
-  }
+  };
 
   return (
     <ProtectedRoute>
-
       <Text>Bienvenido al menú principal</Text>
 
       <Pressable onPress={handleSubmit}>
         <Text className="text-blue-500 text-lg mt-4">Salir de la sesion</Text>
       </Pressable>
-
     </ProtectedRoute>
   );
-};
-
-export default MainScreen;
+}
