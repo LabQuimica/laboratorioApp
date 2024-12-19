@@ -1,12 +1,30 @@
-import React from "react";
 import ProtectedRoute from "@/src/auth/ProtectedRoute";
+import { clearTokens } from "@/src/auth/SecureStore";
+import { useRouter } from "expo-router";
+import { View, Text, TextInput, Pressable, Alert } from "react-native";
 
 const MainScreen: React.FC = () => {
+  const router = useRouter();
+
+
+  const handleSubmit = async () => {
+    try {
+      await clearTokens();
+      router.push("/");
+    } catch (error) {
+      console.error("Failed to logout:", error);
+    }
+  }
+
   return (
     <ProtectedRoute>
-      <div>
-        <h1>Bienvenido al menú principal</h1>
-      </div>
+
+      <Text>Bienvenido al menú principal</Text>
+
+      <Pressable onPress={handleSubmit}>
+        <Text className="text-blue-500 text-lg mt-4">Salir de la sesion</Text>
+      </Pressable>
+
     </ProtectedRoute>
   );
 };
