@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { View, Text, Alert, TextInput, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import axios from "axios";
+import { saveToken } from "@/src/auth/SecureStore";
+import { useRouter } from "expo-router";
+
 type loginData = {
   email: string;
   password: string;
@@ -13,6 +16,7 @@ const Login = () => {
     password: "",
   });
   const [errors, setErrors] = useState<Partial<loginData>>({});
+  const router = useRouter();
 
   const handleChange = (key: keyof loginData, value: string) => {
     setData((prevData) => ({
@@ -57,7 +61,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.1.67:3000/auth/login",
+        "http://192.168.22.88:5000/auth/login",
         data,
         {
           headers: {
@@ -67,6 +71,9 @@ const Login = () => {
       );
       Alert.alert("Success", "Registration successful!");
       console.log(response.data);
+      console.log(response.data.token);
+      await saveToken(response.data.token);
+      router.push("main");
     } catch (error) {
       console.log(error);
       const errorMessage =
@@ -76,6 +83,7 @@ const Login = () => {
       Alert.alert("Error", errorMessage);
     }
   };
+
   return (
     <View>
       <Text className="">Login</Text>
