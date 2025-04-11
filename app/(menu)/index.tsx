@@ -12,7 +12,12 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bienvenido</Text>
-      {user && <Text style={styles.subtitle}>{user.name || user.email}</Text>}
+      {user && <Text style={styles.subtitle}>{user.name}</Text>}
+      <Text> {user?.date} </Text>
+      <Text> {user?.active} </Text>
+      <Text> {user?.codigo} </Text>
+      <Text> {user?.img} </Text>
+      <Text> {user?.email} </Text>
 
       <View style={styles.content}>
         <Text style={styles.paragraph}>

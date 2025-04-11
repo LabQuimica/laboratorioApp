@@ -8,6 +8,7 @@ export interface User {
   rol: Rol;
   active: boolean;
   codigo: string;
+  img: string;
   }
   
   export interface LoginData {
