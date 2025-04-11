@@ -26,7 +26,7 @@ export default function Index() {
   if (isAuthenticated) {
     return <Redirect href="/(menu)" />;
   } else {
-    return <Redirect href="/login" />;
+    return <Redirect href="/bienvenida" />;
   }
 }
 

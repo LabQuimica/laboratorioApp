@@ -55,10 +55,8 @@ export default function LoginScreen() {
 
     try {
       await login(data);
-      // Si llegamos aquí, el login fue exitoso
       router.replace("/(menu)");
     } catch (err) {
-      // El manejo de errores específicos ya está en el store
       Alert.alert(
         "Error",
         "No se pudo iniciar sesión. Verifica tus credenciales."
