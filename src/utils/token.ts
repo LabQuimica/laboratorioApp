@@ -17,8 +17,6 @@ export const getStoredToken = async () => {
     }
   };
 
-
-
   export const clearTokens = async () => {
     try {
       await SecureStore.deleteItemAsync('jwt');
