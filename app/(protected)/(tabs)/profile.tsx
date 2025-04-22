@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useAuthStore } from "@/src/stores/auth";
-import { router } from "expo-router";
+import ThemeSelector from "@/src/components/themeSelector";
 
 export default function HomeScreen() {
   const { user, logout } = useAuthStore();
@@ -18,18 +18,20 @@ export default function HomeScreen() {
       <Text> {user?.codigo} </Text>
       <Text> {user?.img} </Text>
       <Text> {user?.email} </Text>
+      <Text> {user?.img} </Text>
+
+      <View className="mb-6">
+        <Text className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+          Apariencia
+        </Text>
+        <ThemeSelector />
+      </View>
 
       <View style={styles.content}>
         <Text style={styles.paragraph}>
           ¡Has iniciado sesión correctamente! Esta es tu área personal.
         </Text>
       </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.push("/home")}
-      >
-        <Text style={styles.buttonText}>Ir a Home</Text>
-      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>Cerrar Sesión</Text>
       </TouchableOpacity>

@@ -7,6 +7,8 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useAuthStore } from "@/src/stores/auth";
@@ -52,10 +54,11 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     if (!validateForm()) return;
+    Keyboard.dismiss();
 
     try {
       await login(data);
-      router.replace("/(menu)");
+      router.replace("/(protected)");
     } catch (err) {
       Alert.alert(
         "Error",
@@ -65,61 +68,65 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Iniciar Sesión</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Iniciar Sesión</Text>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Correo Electrónico</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ingresa tu correo"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          value={data.email}
-          onChangeText={(text) => setData((prev) => ({ ...prev, email: text }))}
-        />
-        {errors.email ? (
-          <Text style={styles.errorText}>{errors.email}</Text>
-        ) : null}
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Correo Electrónico</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ingresa tu correo"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={data.email}
+            onChangeText={(text) =>
+              setData((prev) => ({ ...prev, email: text }))
+            }
+          />
+          {errors.email ? (
+            <Text style={styles.errorText}>{errors.email}</Text>
+          ) : null}
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Contraseña</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ingresa tu contraseña"
+            secureTextEntry
+            value={data.password}
+            onChangeText={(text) =>
+              setData((prev) => ({ ...prev, password: text }))
+            }
+          />
+          {errors.password ? (
+            <Text style={styles.errorText}>{errors.password}</Text>
+          ) : null}
+        </View>
+
+        {error && <Text style={styles.errorText}>{error}</Text>}
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleLogin}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Iniciar Sesión</Text>
+          )}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.registerLink}
+          onPress={() => router.push("/register")}
+        >
+          <Text style={styles.registerText}>¿No tienes cuenta? Regístrate</Text>
+        </TouchableOpacity>
       </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Contraseña</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ingresa tu contraseña"
-          secureTextEntry
-          value={data.password}
-          onChangeText={(text) =>
-            setData((prev) => ({ ...prev, password: text }))
-          }
-        />
-        {errors.password ? (
-          <Text style={styles.errorText}>{errors.password}</Text>
-        ) : null}
-      </View>
-
-      {error && <Text style={styles.errorText}>{error}</Text>}
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleLogin}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <ActivityIndicator color="#fff" />
-        ) : (
-          <Text style={styles.buttonText}>Iniciar Sesión</Text>
-        )}
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.registerLink}
-        onPress={() => router.push("/register")}
-      >
-        <Text style={styles.registerText}>¿No tienes cuenta? Regístrate</Text>
-      </TouchableOpacity>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
