@@ -4,7 +4,7 @@ import { useAuthStore } from "@/src/stores/auth";
 import { useRouter } from "expo-router";
 
 export default function MenuLayout() {
-  const { isAuthenticated, isLoading, checkAuth } = useAuthStore();
+  const { isAuthenticated, isLoading } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
