@@ -13,7 +13,7 @@ export default function Index() {
 
       if (!isLoading) {
         if (isAuthenticated) {
-          router.replace("/(menu)");
+          router.replace("/(protected)");
         } else {
           router.replace("/bienvenida");
         }
