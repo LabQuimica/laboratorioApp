@@ -31,6 +31,14 @@ export default function StackLayout() {
         }}
       />
       <Stack.Screen
+        name="perfil"
+        options={{
+          title: "Perfil",
+          headerShown: true,
+          presentation: "card",
+        }}
+      />
+      <Stack.Screen
         name="index"
         options={{
           headerShown: false,

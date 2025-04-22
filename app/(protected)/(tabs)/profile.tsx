@@ -18,6 +18,7 @@ export default function HomeScreen() {
       <Text> {user?.codigo} </Text>
       <Text> {user?.img} </Text>
       <Text> {user?.email} </Text>
+      <Text> {user?.img} </Text>
 
       <View className="mb-6">
         <Text className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">

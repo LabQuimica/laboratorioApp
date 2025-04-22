@@ -1,14 +1,30 @@
 import { Tabs } from "expo-router";
 import { useColorScheme } from "nativewind";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Pressable, View } from "react-native";
+import { View, TouchableOpacity } from "react-native";
+import { useAuthStore } from "@/src/stores/auth";
+import { useRouter } from "expo-router";
+import { SvgUri } from "react-native-svg";
 
-// Define valid icon names for type safety
-type IconName = "home" | "map" | "person" | "settings-outline";
+type IconName = "home" | "person";
 
 export default function TabsLayout() {
+  const { user } = useAuthStore();
+  const router = useRouter();
+
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === "dark";
+
+  const BASE_URL =
+    "https://raw.githubusercontent.com/LabQuimica/LabQuimica.github.io/refs/heads/master/avatars/";
+
+  const avatarUrl = user?.img
+    ? `${BASE_URL}${user.img}`
+    : `${BASE_URL}default.svg`;
+
+  const handleAvatarPress = () => {
+    router.push("/perfil");
+  };
 
   return (
     <Tabs
@@ -49,6 +65,21 @@ export default function TabsLayout() {
         tabBarActiveTintColor: "#FFFFFF", // Blanco para el ícono activo
         tabBarInactiveTintColor: "#666666", // Gris para los inactivos
         tabBarShowLabel: false,
+        // Add avatar to header right
+        headerRight: () => (
+          <TouchableOpacity
+            onPress={handleAvatarPress}
+            className="mr-4 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-700"
+            style={{ width: 40, height: 40 }}
+          >
+            <SvgUri
+              width="100%"
+              height="100%"
+              uri={avatarUrl}
+              onError={() => console.log("Error loading SVG")}
+            />
+          </TouchableOpacity>
+        ),
       }}
     >
       <Tabs.Screen
@@ -78,15 +109,6 @@ export default function TabsLayout() {
               focused={focused}
             />
           ),
-          headerRight: () => (
-            <Pressable className="mr-4" onPress={() => {}}>
-              <Ionicons
-                name="settings-outline"
-                size={24}
-                color={isDark ? "#ffffff" : "#000000"}
-              />
-            </Pressable>
-          ),
         }}
       />
     </Tabs>
@@ -112,7 +134,7 @@ function TabBarIcon({
     >
       <Ionicons
         name={focused ? name : (`${name}` as any)}
-        size={24} // Tamaño fijo para asegurar consistencia
+        size={24}
         color={focused ? "#000000" : color} // Negro si está activo, sino el color pasado
       />
     </View>
