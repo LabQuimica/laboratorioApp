@@ -7,7 +7,6 @@ import axios from 'axios';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
-
 // Configuramos un interceptor para incluir el token en todas las peticionesr
 const setupAxiosInterceptors = async () => {
   axios.interceptors.request.use(async (config) => {

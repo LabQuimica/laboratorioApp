@@ -1,33 +1,33 @@
 import React, { useEffect } from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
-import { Redirect } from "expo-router";
+import { useRouter } from "expo-router";
 import { useAuthStore } from "@/src/stores/auth";
 
 export default function Index() {
+  const router = useRouter();
   const { checkAuth, isAuthenticated, isLoading } = useAuthStore();
 
   useEffect(() => {
     const verifyAuth = async () => {
       await checkAuth();
+
+      if (!isLoading) {
+        if (isAuthenticated) {
+          router.replace("/(menu)");
+        } else {
+          router.replace("/bienvenida");
+        }
+      }
     };
+
     verifyAuth();
-  }, []);
+  }, [isAuthenticated, isLoading]);
 
-  // Mostrar un indicador de carga mientras se verifica la autenticación
-  if (isLoading) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color="#007BFF" />
-      </View>
-    );
-  }
-
-  // Redirigir según el estado de autenticación
-  if (isAuthenticated) {
-    return <Redirect href="/(menu)" />;
-  } else {
-    return <Redirect href="/bienvenida" />;
-  }
+  return (
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color="#007BFF" />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
