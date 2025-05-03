@@ -15,7 +15,7 @@ export default function Index() {
         if (isAuthenticated) {
           router.replace("/(protected)");
         } else {
-          router.replace("/bienvenida");
+          router.replace("/(auth)");
         }
       }
     };

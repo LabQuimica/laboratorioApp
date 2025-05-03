@@ -1,5 +1,4 @@
 import { Stack } from "expo-router";
-import { View } from "react-native";
 import "../global.css";
 import { ThemeProvider } from "@/src/context/ThemeContext";
 import { useColorScheme } from "nativewind";
@@ -23,40 +22,36 @@ function RootLayoutNavigation() {
   const statusBarStyle = isDarkMode ? "light" : "dark";
 
   return (
-    <View className={`flex-1`}>
-      <Stack
-        screenOptions={{
+    <Stack
+      screenOptions={{
+        contentStyle: {
+          backgroundColor: isDarkMode ? "#ffffff" : "#ffffff",
+        },
+        statusBarBackgroundColor: statusBarColor,
+        statusBarStyle: statusBarStyle,
+        statusBarHidden: false,
+      }}
+    >
+      <Stack.Screen
+        name="index"
+        options={{
           headerShown: false,
-          contentStyle: {
-            backgroundColor: isDarkMode ? "#171717" : "#ffffff",
-          },
-          statusBarBackgroundColor: statusBarColor,
-          statusBarStyle: statusBarStyle,
-          statusBarHidden: false,
-          statusBarTranslucent: false,
         }}
-      >
-        <Stack.Screen
-          name="index"
-          options={{
-            headerShown: false,
-          }}
-        />
+      />
+      <Stack.Screen
+        name="(protected)"
+        options={{
+          headerShown: false,
+        }}
+      />
 
-        <Stack.Screen
-          name="login"
-          options={{
-            headerShown: true,
-            headerBackTitle: "Volver",
-            headerStyle: {
-              backgroundColor: isDarkMode ? "#171717" : "#ffffff",
-            },
-            headerTintColor: isDarkMode ? "#ffffff" : "#000000",
-            statusBarBackgroundColor: isDarkMode ? "#171717" : "#ffffff",
-            statusBarStyle: statusBarStyle,
-          }}
-        />
-      </Stack>
-    </View>
+      <Stack.Screen
+        name="(auth)"
+        options={{
+          headerShown: false,
+          presentation: "modal",
+        }}
+      />
+    </Stack>
   );
 }
