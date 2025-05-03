@@ -1,7 +1,8 @@
 import { Stack } from "expo-router";
 import { View } from "react-native";
 import "../global.css";
-import { ThemeProvider, useTheme } from "@/src/context/ThemeContext";
+import { ThemeProvider } from "@/src/context/ThemeContext";
+import { useColorScheme } from "nativewind";
 
 export default function RootLayout() {
   return (
@@ -11,7 +12,7 @@ export default function RootLayout() {
   );
 }
 function RootLayoutNavigation() {
-  const { colorScheme } = useTheme();
+  const { colorScheme } = useColorScheme();
   const isDarkMode = colorScheme === "dark";
 
   const statusBarColor = isDarkMode ? "#171717" : "#ffffff";
