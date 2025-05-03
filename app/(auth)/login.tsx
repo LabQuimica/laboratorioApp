@@ -1,185 +1,190 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  ActivityIndicator,
-  Alert,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
 import { useRouter } from "expo-router";
 import { useAuthStore } from "@/src/stores/auth";
 import { LoginData } from "@/src/types/user";
+import React, { useRef, useState } from "react";
+import {
+  Alert,
+  View,
+  TextInput,
+  Text,
+  AppState,
+  TouchableOpacity,
+  SafeAreaView,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { useColorScheme } from "nativewind";
+import { Image } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function LoginScreen() {
   const router = useRouter();
   const { login, isLoading, error } = useAuthStore();
-
-  const [data, setData] = useState<LoginData>({
-    email: "",
-    password: "",
-  });
-
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-  });
-
-  const validateForm = () => {
-    let valid = true;
-    const newErrors = { email: "", password: "" };
-
-    if (!data.email) {
-      newErrors.email = "El correo electrónico es obligatorio";
-      valid = false;
-    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
-      newErrors.email = "Formato de correo electrónico inválido";
-      valid = false;
-    }
-
-    if (!data.password) {
-      newErrors.password = "La contraseña es obligatoria";
-      valid = false;
-    } else if (data.password.length < 6) {
-      newErrors.password = "La contraseña debe tener al menos 6 caracteres";
-      valid = false;
-    }
-
-    setErrors(newErrors);
-    return valid;
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { colorScheme } = useColorScheme();
+  const [showPassword, setShowPassword] = useState(false);
+  const emailRef = useRef<TextInput>(null);
+  const passwordRef = useRef<TextInput>(null);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [formError, setFormError] = useState("");
+  const isDarkMode = colorScheme === "dark";
 
   const handleLogin = async () => {
-    if (!validateForm()) return;
+    Keyboard.dismiss();
     Keyboard.dismiss();
 
+    // Reset previous errors
+    setEmailError("");
+    setPasswordError("");
+    setFormError("");
+
+    // Validate fields
+    let isValid = true;
+
+    if (!email.trim()) {
+      setEmailError("El correo electrónico es obligatorio");
+      isValid = false;
+    }
+
+    if (!password) {
+      setPasswordError("La contraseña es obligatoria");
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return;
+    }
+
+    setLoading(true);
+
+    if (emailRef.current) {
+      emailRef.current.blur();
+    }
+
+    if (passwordRef.current) {
+      passwordRef.current.blur();
+    }
+
     try {
-      await login(data);
+      await login({ email, password });
       router.replace("/(protected)");
     } catch (err) {
-      Alert.alert(
-        "Error",
-        "No se pudo iniciar sesión. Verifica tus credenciales."
-      );
+      setFormError("No se pudo iniciar sesión. Verifica tus credenciales.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Iniciar Sesión</Text>
+      <View className="flex-1 bg-background dark:bg-background-dark pt-20 justify-between">
+        <View className="space-y-4 mt-28 ">
+          <View>
+            <TextInput
+              ref={emailRef}
+              className={`bg-white dark:bg-neutral-800 text-black dark:text-white border ${
+                emailError
+                  ? "border-red-500"
+                  : "border-neutral-700 dark:border-neutral-700"
+              } w-11/12 mx-auto p-4 h-14 rounded-2xl`}
+              placeholder="Correo Electrónico"
+              placeholderTextColor="#9ca3af"
+              value={email}
+              onChangeText={(text) => {
+                setEmail(text);
+                if (text.trim()) setEmailError("");
+              }}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoComplete="email"
+              onSubmitEditing={() =>
+                passwordRef.current && passwordRef.current.focus()
+              }
+            />
+            {emailError ? (
+              <Text className="text-red-500 text-sm ml-6 mt-1">
+                {emailError}
+              </Text>
+            ) : null}
+          </View>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Correo Electrónico</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Ingresa tu correo"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            value={data.email}
-            onChangeText={(text) =>
-              setData((prev) => ({ ...prev, email: text }))
-            }
-          />
-          {errors.email ? (
-            <Text style={styles.errorText}>{errors.email}</Text>
+          {/* Campo de contraseña */}
+          <View className="relative mt-10">
+            <TextInput
+              ref={passwordRef}
+              className={`bg-white dark:bg-neutral-800 text-black dark:text-white border ${
+                passwordError
+                  ? "border-red-500"
+                  : "border-neutral-700 dark:border-neutral-700"
+              } w-11/12 mx-auto p-4 h-14 rounded-2xl`}
+              placeholder="Contraseña"
+              placeholderTextColor="#9ca3af"
+              value={password}
+              onChangeText={(text) => {
+                setPassword(text);
+                if (text) {
+                  setPasswordError("");
+                }
+              }}
+              secureTextEntry={!showPassword}
+              autoCapitalize="none"
+              onSubmitEditing={handleLogin}
+              returnKeyType="go"
+            />
+            <TouchableOpacity
+              className="absolute right-10 top-4"
+              onPress={() => setShowPassword(!showPassword)}
+            >
+              <Ionicons
+                name={showPassword ? "eye-off-outline" : "eye-outline"}
+                size={24}
+                color="#9ca3af"
+              />
+            </TouchableOpacity>
+            {passwordError ? (
+              <Text className="text-red-500 text-sm ml-6 mt-1">
+                {passwordError}
+              </Text>
+            ) : null}
+          </View>
+
+          {/* Mostrar error de formulario del backend */}
+          {formError ? (
+            <View className="bg-red-100 dark:bg-red-900/30 p-3 rounded-lg mx-5 mt-2">
+              <Text className="text-red-600 dark:text-red-400 text-center">
+                {formError}
+              </Text>
+            </View>
           ) : null}
-        </View>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Contraseña</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Ingresa tu contraseña"
-            secureTextEntry
-            value={data.password}
-            onChangeText={(text) =>
-              setData((prev) => ({ ...prev, password: text }))
+          {/* Botón de Iniciar Sesión */}
+          <TouchableOpacity
+            className={`${
+              loading ? "bg-gray-500" : "bg-primary "
+            } w-11/12 py-5 rounded-3xl items-center justify-center mt-10 mx-auto`}
+            onPress={handleLogin}
+            disabled={loading}
+          >
+            <Text className="text-white font-semibold text-lg">
+              {loading ? "Cargando..." : "Iniciar Sesión"}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View className="items-center justify-center w-full mb-10">
+          <Image
+            source={
+              isDarkMode
+                ? require("@/assets/images/ciencias_dark.png")
+                : require("@/assets/images/ciencias_light.png")
             }
+            className="w-60 h-60"
+            resizeMode="contain"
           />
-          {errors.password ? (
-            <Text style={styles.errorText}>{errors.password}</Text>
-          ) : null}
         </View>
-
-        {error && <Text style={styles.errorText}>{error}</Text>}
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleLogin}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={styles.buttonText}>Iniciar Sesión</Text>
-          )}
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.registerLink}
-          onPress={() => router.push("/register")}
-        >
-          <Text style={styles.registerText}>¿No tienes cuenta? Regístrate</Text>
-        </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 20,
-    backgroundColor: "#f5f5f5",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 30,
-    textAlign: "center",
-  },
-  inputContainer: {
-    marginBottom: 20,
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 5,
-    color: "#333",
-  },
-  input: {
-    backgroundColor: "#fff",
-    borderRadius: 5,
-    paddingHorizontal: 15,
-    paddingVertical: 12,
-    borderWidth: 1,
-    borderColor: "#ddd",
-  },
-  button: {
-    backgroundColor: "#007BFF",
-    padding: 15,
-    borderRadius: 5,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  errorText: {
-    color: "red",
-    marginTop: 5,
-  },
-  registerLink: {
-    marginTop: 20,
-    alignItems: "center",
-  },
-  registerText: {
-    color: "#007BFF",
-  },
-});
