@@ -3,11 +3,15 @@ import { View } from "react-native";
 import "../global.css";
 import { ThemeProvider } from "@/src/context/ThemeContext";
 import { useColorScheme } from "nativewind";
+import queryClient from "@/src/services/queryClient";
+import { QueryClientProvider } from "@tanstack/react-query";
 
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <RootLayoutNavigation />
+      <QueryClientProvider client={queryClient}>
+        <RootLayoutNavigation />
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }

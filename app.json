@@ -5,19 +5,20 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "com.uppit.labquimi",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dant33.labQuimi"
+      "bundleIdentifier": "com.uppit.labquimi"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.dant33.labQuimi"
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "com.uppit.labquimi"
     },
     "web": {
       "bundler": "metro",
@@ -29,12 +30,17 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/logo_light.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#ffffff",
+          "dark": {
+            "image": "./assets/images/logo_dark.png",
+            "backgroundColor": "#171717"
+          }
         }
       ],
+      
       "expo-secure-store"
     ],
     "experiments": {
