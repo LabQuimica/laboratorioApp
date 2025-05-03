@@ -15,38 +15,36 @@ export default function Welcome() {
 
   return (
     <SafeAreaView className="flex-1 bg-background dark:bg-background-dark px-4">
-      <View className="flex-1 items-center justify-center">
+      <View className="flex-1 items-center justify-center gap-4">
+        <Text className="text-6xl mt-2 text-black dark:text-white">
+          Bienvenido
+        </Text>
         <Text className="text-lg mt-2 text-black dark:text-slate-300">
-          Conecta, visualiza y comparte tu ciudad
+          App de Laboratorio de Química
         </Text>
       </View>
-      <View className="items-center justify-center w-full px-10 mb-28">
+      <View className="items-center justify-center w-full px-10 mb-28 gap-8">
         <Pressable
-          className="dark:bg-white bg-[#1E1E1E] w-full py-3 rounded-2xl items-center justify-center"
+          className="bg-primary w-full py-5 rounded-3xl items-center justify-center"
           onPress={() => router.push("/login")}
         >
-          <Text className="text-white dark:text-black font-bold">
-            Iniciar sesión
-          </Text>
+          <Text className="text-white font-semibold">Iniciar sesión</Text>
         </Pressable>
-        <TouchableOpacity className="mt-8">
-          <Text
-            className="text-black dark:text-white"
-            onPress={() => router.push("/register")}
-          >
-            ¿Aún no tienes cuenta?
-            <Text className="font-extrabold"> Regístrate</Text>
-          </Text>
-        </TouchableOpacity>
+        <Pressable
+          className="bg-primary w-full py-5 rounded-3xl items-center justify-center"
+          onPress={() => router.push("/register")}
+        >
+          <Text className="text-white font-semibold">Registrarse</Text>
+        </Pressable>
       </View>
       <View className="items-center justify-center w-full mb-10">
         <Image
           source={
             isDarkMode
-              ? require("@/assets/images/logo_dark.png")
-              : require("@/assets/images/logo_light.png")
+              ? require("@/assets/images/ciencias_dark.png")
+              : require("@/assets/images/ciencias_light.png")
           }
-          className="w-52 h-52 mb-4"
+          className="w-60 h-60"
           resizeMode="contain"
         />
       </View>
