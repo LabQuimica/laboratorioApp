@@ -22,15 +22,19 @@ export default function LoginScreen() {
   const { login, isLoading, error } = useAuthStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { colorScheme } = useColorScheme();
   const [showPassword, setShowPassword] = useState(false);
-  const emailRef = useRef<TextInput>(null);
-  const passwordRef = useRef<TextInput>(null);
+
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [formError, setFormError] = useState("");
+
+  const emailRef = useRef<TextInput>(null);
+  const passwordRef = useRef<TextInput>(null);
+
+  const { colorScheme } = useColorScheme();
   const isDarkMode = colorScheme === "dark";
+
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     Keyboard.dismiss();

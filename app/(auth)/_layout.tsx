@@ -35,7 +35,7 @@ export default function StackLayout() {
         <Stack.Screen
           name="register"
           options={{
-            title: "Register",
+            title: "Registrate",
             headerShown: true,
             headerTransparent: true,
             headerTitleAlign: "center",
