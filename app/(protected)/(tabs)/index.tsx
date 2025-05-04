@@ -1,6 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { useColorScheme } from "nativewind";
-import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
 
 export default function Home() {
@@ -14,7 +13,6 @@ export default function Home() {
 
   return (
     <View className="flex-1 bg-white dark:bg-gray-900">
-      <StatusBar style={isDark ? "light" : "dark"} />
       <ScrollView className="flex-1 p-4">
         <View className="mb-6">
           <Text className="text-3xl font-bold text-gray-900 dark:text-white">

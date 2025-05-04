@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect } from "react";
 import { useColorScheme } from "nativewind";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const THEME_PREFERENCE_KEY = "@MyApp:themePreference";
+const THEME_PREFERENCE_KEY = "themePreference";
 
 type ThemeContextType = {
   colorScheme: "light" | "dark" | undefined;

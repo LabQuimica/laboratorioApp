@@ -9,7 +9,7 @@ export default function MenuLayout() {
 
   useEffect(() => {
     if (!isAuthenticated && !isLoading) {
-      router.replace("/login");
+      router.replace("/(auth)");
     }
   }, [isAuthenticated, isLoading]);
 
