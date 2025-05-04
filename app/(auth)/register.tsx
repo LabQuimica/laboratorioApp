@@ -142,7 +142,7 @@ export default function Register() {
       <View className="flex-1 bg-white dark:bg-neutral-900">
         <View className="flex-1">
           <TouchableOpacity
-            className="w-36 h-36 bg-gray-100 dark:bg-neutral-800 rounded-full mx-auto mt-40 items-center justify-center relative"
+            className="w-36 h-36 bg-gray-100 dark:bg-neutral-800 rounded-full mx-auto mt-40 items-center justify-center relative border-2 border-gray-200 dark:border-gray-700"
             onPress={() => router.push("/avatars")}
             disabled={loading}
           >
