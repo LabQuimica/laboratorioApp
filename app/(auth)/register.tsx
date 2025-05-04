@@ -10,12 +10,17 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useAuthStore } from "@/src/stores/auth";
+import { SvgUri } from "react-native-svg";
+
+const BASE_URL = process.env.EXPO_PUBLIC_API_URL_AVATARS;
+const DEFAULT_AVATAR = "default.svg";
 
 export default function Register() {
+  const params = useLocalSearchParams<{ selectedAvatar: string }>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -24,6 +29,7 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [avatar, setAvatar] = useState(DEFAULT_AVATAR);
   const nameRef = useRef<TextInput>(null);
   const codigoRef = useRef<TextInput>(null);
   const emailRef = useRef<TextInput>(null);
@@ -38,6 +44,13 @@ export default function Register() {
 
   // Get the register function from auth store
   const register = useAuthStore((state) => state.register);
+
+  // Update avatar when returned from avatar selection screen
+  useEffect(() => {
+    if (params && params.selectedAvatar) {
+      setAvatar(params.selectedAvatar);
+    }
+  }, [params]);
 
   const handleSubmit = async () => {
     Keyboard.dismiss();
@@ -106,10 +119,10 @@ export default function Register() {
         password,
         name,
         codigo,
-        img: "lorelei-neutral/avatar-001.svg",
+        img: avatar,
       });
 
-      router.push("/(protected)/(tabs)/");
+      router.push("/(protected)/(tabs)");
     } catch (error) {
       console.log(error);
       let errorMessage = "Registration failed. Please try again.";
@@ -128,11 +141,26 @@ export default function Register() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View className="flex-1 bg-white dark:bg-neutral-900">
         <View className="flex-1">
-          <View className="flex h-28 pt-14 justify-center items-center rounded-b-full">
-            <Text className="text-black dark:text-white text-xl text-center">
-              Ingresa los siguientes datos
-            </Text>
-          </View>
+          <TouchableOpacity
+            className="w-36 h-36 bg-gray-100 dark:bg-neutral-800 rounded-full mx-auto mt-40 items-center justify-center relative"
+            onPress={() => router.push("/avatars")}
+            disabled={loading}
+          >
+            {avatar ? (
+              <View className="w-full h-full overflow-hidden rounded-full">
+                <SvgUri
+                  width="100%"
+                  height="100%"
+                  uri={`${BASE_URL}${avatar}`}
+                />
+              </View>
+            ) : (
+              <Ionicons name="person" size={48} color="#9ca3af" />
+            )}
+            <View className="absolute bottom-1 right-1 bg-primary rounded-full w-10 h-10 items-center justify-center">
+              <Ionicons name="camera" size={20} color="white" />
+            </View>
+          </TouchableOpacity>
 
           <View className="rounded-tl-[3.0rem] flex-1 w-screen justify-between">
             <View className="gap-4">

@@ -47,6 +47,22 @@ export default function StackLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="avatars"
+          options={{
+            headerShown: false,
+            presentation: "formSheet",
+            gestureDirection: "vertical",
+            animation: "slide_from_bottom",
+            gestureEnabled: false,
+            sheetGrabberVisible: false,
+            sheetInitialDetentIndex: 0,
+            sheetAllowedDetents: [0.9],
+            sheetCornerRadius: 20,
+            sheetExpandsWhenScrolledToEdge: false,
+            sheetElevation: 24,
+          }}
+        />
       </Stack>
     </View>
   );
