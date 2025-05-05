@@ -35,6 +35,7 @@ export interface User {
     isAuthenticated: boolean;
     isLoading: boolean;
     error: string | null;
+    updateUserAvatar: (avatar: string) => Promise<void>;
     register: (data: RegisterData) => Promise<AuthResponse>;
     login: (data: LoginData) => Promise<void>;
     logout: () => Promise<void>;

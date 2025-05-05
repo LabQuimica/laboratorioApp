@@ -5,6 +5,8 @@ import ThemeSelector from "@/src/components/themeSelector";
 import { SvgUri } from "react-native-svg";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
+import AvatarConfirmButton from "@/src/components/AvatarConfirmButton";
+import ToastExample from "@/src/components/ToastExample";
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL_AVATARS;
 
 export default function PerfilScreen() {
@@ -14,15 +16,36 @@ export default function PerfilScreen() {
   const DEFAULT_AVATAR = user?.img;
 
   const [avatar, setAvatar] = useState(DEFAULT_AVATAR);
+  const [hasChanges, setHasChanges] = useState(false);
 
   useEffect(() => {
     if (params && params.selectedAvatar) {
       setAvatar(params.selectedAvatar);
+      setHasChanges(params.selectedAvatar !== DEFAULT_AVATAR);
     }
-  }, [params]);
+  }, [params, DEFAULT_AVATAR]);
+
+  const handleSuccess = () => {
+    setHasChanges(false);
+  };
+
+  const handleError = (error: any) => {
+    // Error will be handled by toast in the button component
+  };
 
   return (
     <View className="flex-1 items-center p-6 bg-background dark:bg-background-dark pt-32">
+      {hasChanges && (
+        <View className="w-full mb-4">
+          <AvatarConfirmButton
+            userId={user?.id_user || 0}
+            avatar={avatar || ""}
+            onSuccess={handleSuccess}
+            onError={handleError}
+          />
+        </View>
+      )}
+
       <View className="items-center mb-6">
         <TouchableOpacity
           className="w-40 h-40 bg-background dark:bg-background-dark rounded-full mx-auto items-center justify-center relative border-2 border-gray-200 dark:border-gray-700"
@@ -53,6 +76,7 @@ export default function PerfilScreen() {
           Información de Perfil
         </Text>
         <ThemeSelector />
+        <ToastExample />
       </View>
     </View>
   );
