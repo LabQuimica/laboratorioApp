@@ -167,9 +167,7 @@ export default function Toast({
   if (!visible && !animating.current) return null;
 
   const colors = getIconAndColorClasses(type);
-  const iconColor = isDark
-    ? colors.darkTextColor.replace("text-", "").replace("dark:", "")
-    : colors.textColor.replace("text-", "");
+  const iconColor = isDark ? "#ffffff" : colors.textColor.replace("text-", "");
 
   return (
     <Animated.View
