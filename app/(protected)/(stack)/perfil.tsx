@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { useAuthStore } from "@/src/stores/auth";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import ThemeSelector from "@/src/components/themeSelector";
+import ThemeSelector from "@/src/components/selector/themeSelector";
 import { SvgUri } from "react-native-svg";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";

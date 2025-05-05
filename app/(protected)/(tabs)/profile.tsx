@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useAuthStore } from "@/src/stores/auth";
-import ThemeSelector from "@/src/components/themeSelector";
+import ThemeSelector from "@/src/components/selector/themeSelector";
 
 export default function HomeScreen() {
   const { user, logout } = useAuthStore();

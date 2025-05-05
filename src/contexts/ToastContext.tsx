@@ -5,7 +5,7 @@ import React, {
   useState,
   useCallback,
 } from "react";
-import Toast from "../components/Toast";
+import Toast from "../components/ui/Toast";
 
 type ToastType = "success" | "error" | "info" | "warning";
 

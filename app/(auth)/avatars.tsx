@@ -1,4 +1,4 @@
-import AvatarsSelector from "@/src/components/avatarsSelector";
+import AvatarsSelector from "@/src/components/selector/avatarsSelector";
 
 export default function Avatars() {
   return <AvatarsSelector />;
