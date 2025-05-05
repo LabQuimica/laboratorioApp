@@ -71,7 +71,7 @@ export default function PerfilScreen() {
         </Text>
       </View>
 
-      <View className="w-full mt-4 p-4rounded-lg">
+      <View className="w-full mt-4 p-4rounded-lg ">
         <Text className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
           Información de Perfil
         </Text>

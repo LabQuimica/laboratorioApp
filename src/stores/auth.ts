@@ -29,6 +29,18 @@ export const useAuthStore = create<AuthState>()(
       isLoading: true,
       error: null,
 
+      updateUserAvatar: async (avatar: string) => {
+        const currentUser = get().user;
+        if (!currentUser) return;
+        
+        set({ 
+          user: { 
+            ...currentUser, 
+            img: avatar 
+          } 
+        });
+      },
+
       register: async (data: RegisterData) => {
         set({ isLoading: true, error: null });
         try {
