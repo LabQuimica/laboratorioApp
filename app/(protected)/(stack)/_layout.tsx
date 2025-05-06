@@ -19,16 +19,9 @@ export default function StackLayout() {
             fontWeight: "bold",
           },
           contentStyle: { backgroundColor },
-          animation: "slide_from_right",
+          animation: "fade_from_bottom",
         }}
       >
-        <Stack.Screen
-          name="(sheet)"
-          options={{
-            headerShown: false,
-            presentation: "formSheet",
-          }}
-        />
         <Stack.Screen
           name="details"
           options={{
@@ -51,6 +44,22 @@ export default function StackLayout() {
           name="index"
           options={{
             headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="avatars"
+          options={{
+            headerShown: false,
+            presentation: "formSheet",
+            gestureDirection: "vertical",
+            animation: "slide_from_bottom",
+            gestureEnabled: false,
+            sheetGrabberVisible: false,
+            sheetInitialDetentIndex: 0,
+            sheetAllowedDetents: [0.9],
+            sheetCornerRadius: 20,
+            sheetExpandsWhenScrolledToEdge: false,
+            sheetElevation: 24,
           }}
         />
       </Stack>

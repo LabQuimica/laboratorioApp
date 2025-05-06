@@ -6,7 +6,7 @@ export default function ThemeSelector() {
   const { colorScheme, selectedPreference, setTheme } = useTheme();
 
   return (
-    <View className="p-4   my-4">
+    <View className="p-4 my-4">
       <Text className="text-lg font-semibold mb-3 dark:text-white">
         Seleccionar Tema
       </Text>

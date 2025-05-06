@@ -49,7 +49,7 @@ export default function PerfilScreen() {
       <View className="items-center mb-6">
         <TouchableOpacity
           className="w-40 h-40 bg-background dark:bg-background-dark rounded-full mx-auto items-center justify-center relative border-2 border-gray-200 dark:border-gray-700"
-          onPress={() => router.push("/(protected)/(stack)/(sheet)/avatars")}
+          onPress={() => router.push("/avatars")}
         >
           {avatar ? (
             <View className="w-full h-full overflow-hidden rounded-full">
