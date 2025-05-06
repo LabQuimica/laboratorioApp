@@ -35,7 +35,7 @@ export default function StackLayout() {
         <Stack.Screen
           name="register"
           options={{
-            title: "Register",
+            title: "Registrate",
             headerShown: true,
             headerTransparent: true,
             headerTitleAlign: "center",
@@ -45,6 +45,22 @@ export default function StackLayout() {
           name="index"
           options={{
             headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="avatars"
+          options={{
+            headerShown: false,
+            presentation: "formSheet",
+            gestureDirection: "vertical",
+            animation: "slide_from_bottom",
+            gestureEnabled: false,
+            sheetGrabberVisible: false,
+            sheetInitialDetentIndex: 0,
+            sheetAllowedDetents: [0.9],
+            sheetCornerRadius: 20,
+            sheetExpandsWhenScrolledToEdge: false,
+            sheetElevation: 24,
           }}
         />
       </Stack>

@@ -16,6 +16,14 @@ export interface User {
     password: string;
   }
   
+  export interface RegisterData {
+    name: string;
+    email: string;
+    password: string;
+    codigo: string;
+    img: string;
+  }
+  
   export interface AuthResponse {
     message: string;
     token: string;
@@ -27,6 +35,8 @@ export interface User {
     isAuthenticated: boolean;
     isLoading: boolean;
     error: string | null;
+    updateUserAvatar: (avatar: string) => Promise<void>;
+    register: (data: RegisterData) => Promise<AuthResponse>;
     login: (data: LoginData) => Promise<void>;
     logout: () => Promise<void>;
     checkAuth: () => Promise<void>;

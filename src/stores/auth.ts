@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LoginData, User, AuthState, AuthResponse } from '@/src/types/user';
+import { LoginData, User, AuthState, AuthResponse, RegisterData } from '@/src/types/user';
 import { saveToken, getStoredToken, clearTokens } from '@/src/utils/token';
 import axios from 'axios';
 
@@ -28,6 +28,46 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       isLoading: true,
       error: null,
+
+      updateUserAvatar: async (avatar: string) => {
+        const currentUser = get().user;
+        if (!currentUser) return;
+        
+        set({ 
+          user: { 
+            ...currentUser, 
+            img: avatar 
+          } 
+        });
+      },
+
+      register: async (data: RegisterData) => {
+        set({ isLoading: true, error: null });
+        try {
+          const response = await axios.post<AuthResponse>(`${API_URL}/auth/registerMovil`, data);
+          
+          // Guardar el token en SecureStore
+          await saveToken(response.data.token);
+          
+          // Actualizar el estado con la información del usuario
+          set({
+            user: response.data.user,
+            isAuthenticated: true,
+            isLoading: false,
+            error: null
+          });
+          
+          return response.data;
+        } catch (error) {
+          console.error('Registration error:', error);
+          let errorMessage = 'Error al registrar usuario';
+          if (axios.isAxiosError(error) && error.response) {
+            errorMessage = error.response.data.error || errorMessage;
+          }
+          set({ isLoading: false, error: errorMessage });
+          throw error;
+        }
+      },
 
       login: async (data: LoginData) => {
         set({ isLoading: true, error: null });

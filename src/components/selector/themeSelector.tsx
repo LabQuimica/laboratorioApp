@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { useTheme } from "@/src/context/ThemeContext";
+import { useTheme } from "@/src/contexts/ThemeContext";
 
 export default function ThemeSelector() {
   const { colorScheme, selectedPreference, setTheme } = useTheme();
 
   return (
-    <View className="p-4 border border-gray-300 dark:border-gray-700 rounded-lg my-4">
+    <View className="p-4 my-4">
       <Text className="text-lg font-semibold mb-3 dark:text-white">
         Seleccionar Tema
       </Text>
@@ -71,9 +71,9 @@ export default function ThemeSelector() {
           </Text>
         </TouchableOpacity>
       </View>
-      <Text className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+      {/* <Text className="mt-2 text-xs text-gray-500 dark:text-gray-400">
         Preferencia: {selectedPreference} / Tema Activo: {colorScheme}
-      </Text>
+      </Text> */}
     </View>
   );
 }

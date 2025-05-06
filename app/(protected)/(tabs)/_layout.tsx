@@ -15,8 +15,7 @@ export default function TabsLayout() {
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === "dark";
 
-  const BASE_URL =
-    "https://raw.githubusercontent.com/LabQuimica/LabQuimica.github.io/refs/heads/master/avatars/";
+  const BASE_URL = process.env.EXPO_PUBLIC_API_URL_AVATARS;
 
   const avatarUrl = user?.img
     ? `${BASE_URL}${user.img}`
