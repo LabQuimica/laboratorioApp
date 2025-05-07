@@ -75,8 +75,11 @@ export default function PerfilScreen() {
         <Text className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
           Información de Perfil
         </Text>
+        <Text className="text-gray-500 dark:text-gray-400"> {user?.date} </Text>
+        <Text className="text-gray-500 dark:text-gray-400">{user?.active}</Text>
+        <Text className="text-gray-500 dark:text-gray-400">{user?.codigo}</Text>
+        <Text className="text-gray-500 dark:text-gray-400">{user?.email}</Text>
         <ThemeSelector />
-        <ToastExample />
       </View>
     </View>
   );
