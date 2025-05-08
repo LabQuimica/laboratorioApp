@@ -1,3 +1,4 @@
+import ThemeSelector from "@/src/components/selector/themeSelector";
 import { Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { View } from "react-native";
@@ -38,6 +39,7 @@ export default function StackLayout() {
             presentation: "card",
             headerTransparent: true,
             headerTitleAlign: "center",
+            headerRight: () => <ThemeSelector />,
           }}
         />
         <Stack.Screen
