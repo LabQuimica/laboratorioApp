@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Modal, Pressable } from "react-native";
 import { useTheme } from "@/src/contexts/ThemeContext";
 import { Ionicons } from "@expo/vector-icons";
@@ -46,16 +46,15 @@ export default function ThemeSelector() {
   };
 
   return (
-    <View className="relative">
-      {/* Dropdown Toggle Button */}
+    <View className="relative ">
       <TouchableOpacity
         onPress={() => setDropdownVisible(!dropdownVisible)}
-        className="p-2 rounded-full"
         accessibilityLabel="Selector de tema"
+        hitSlop={{ top: 10, bottom: 10, left: 30, right: 30 }}
       >
         <Ionicons
           name={getCurrentThemeIcon()}
-          size={22}
+          size={29}
           color={isDark ? "white" : "black"}
         />
       </TouchableOpacity>
