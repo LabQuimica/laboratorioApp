@@ -3,6 +3,7 @@ import { View, Text, ActivityIndicator, RefreshControl } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { useValesAlumno } from "@/src/hooks/useValesAlumno";
 import { ValeAlumnoDetails } from "@/src/types/vale";
+import { CardAlumno } from "./cardAlumno";
 
 export const ValesAlumnoList = ({ userId }: { userId: number }) => {
   const { data, isLoading, isError, error, refetch } = useValesAlumno(userId);
@@ -60,35 +61,7 @@ export const ValesAlumnoList = ({ userId }: { userId: number }) => {
           />
         }
         renderItem={({ item }: { item: ValeAlumnoDetails }) => (
-          <View className="p-4 border-b border-gray-200 dark:border-gray-700">
-            <Text className="font-bold text-gray-800 dark:text-gray-200">
-              {item.id_vale}
-            </Text>
-            <Text className="text-gray-600 dark:text-gray-400">
-              {item.estado_vale}
-            </Text>
-            <Text className="font-bold text-gray-800 dark:text-gray-200">
-              {item.email_alumno}
-            </Text>
-            <Text className="text-gray-600 dark:text-gray-400">
-              {item.fecha_fin}
-            </Text>
-            <Text className="text-gray-600 dark:text-gray-400">
-              {item.fecha_inicio}
-            </Text>
-            <Text className="font-bold text-gray-800 dark:text-gray-200">
-              {item.fecha_solicitadaVale}
-            </Text>
-            <Text className="text-gray-600 dark:text-gray-400">
-              {item.nombre_alumno}
-            </Text>
-            <Text className="font-bold text-gray-800 dark:text-gray-200">
-              {item.observaciones_vale}
-            </Text>
-            <Text className="text-gray-600 dark:text-gray-400">
-              {item.practica.nombre_practica}
-            </Text>
-          </View>
+          <CardAlumno vale={item} />
         )}
         keyExtractor={(item: ValeAlumnoDetails) => item.id_vale.toString()}
       />

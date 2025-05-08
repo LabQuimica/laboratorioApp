@@ -33,14 +33,14 @@ export default function ProfileHeader({
 }: ProfileHeaderProps) {
   const getRoleVariant = (
     role?: string
-  ): "primary" | "secondary" | "success" => {
+  ): "primary" | "progreso" | "success" => {
     if (!role) return "primary";
 
     switch (role.toLowerCase()) {
       case "administrador":
         return "primary";
       case "profesor":
-        return "secondary";
+        return "progreso";
       case "alumno":
         return "primary";
       default:
@@ -89,14 +89,14 @@ export default function ProfileHeader({
         <View className="flex-1 justify-center gap-4">
           <View className="flex-row justify-between">
             <View>
+              <Text className="text-gray-500 dark:text-gray-200">
+                {user?.codigo || "0000000000"}
+              </Text>
+            </View>
+            <View>
               {user?.rol && (
                 <Badge label={user.rol} variant={getRoleVariant(user.rol)} />
               )}
-            </View>
-            <View>
-              <Text className="text-gray-500 dark:text-gray-200">
-                {user?.codigo || ""}
-              </Text>
             </View>
           </View>
           <Text className="text-2xl text-center font-bold text-gray-800 dark:text-white">

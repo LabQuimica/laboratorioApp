@@ -4,9 +4,9 @@ import { View, Text, ViewStyle, TextStyle } from "react-native";
 export type BadgeVariant =
   | "default"
   | "primary"
-  | "secondary"
+  | "progreso"
   | "success"
-  | "warning"
+  | "pendiente"
   | "danger";
 
 export interface BadgeProps {
@@ -31,7 +31,7 @@ export function Badge({
           container: "bg-primary",
           text: "text-white",
         };
-      case "secondary":
+      case "progreso":
         return {
           container: "bg-sky-300",
           text: "text-sky-950",
@@ -41,7 +41,7 @@ export function Badge({
           container: "bg-green-300 ",
           text: " text-green-950",
         };
-      case "warning":
+      case "pendiente":
         return {
           container: "bg-amber-300",
           text: "text-amber-950",
