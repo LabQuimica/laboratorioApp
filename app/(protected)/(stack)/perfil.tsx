@@ -123,10 +123,6 @@ export default function PerfilScreen() {
           <Text className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
             Información Adicional
           </Text>
-          <Text className="text-gray-500 dark:text-gray-400">
-            Fecha: {user?.date || ""}
-          </Text>
-          <ThemeSelector />
         </View>
       </View>
     </ScrollView>
