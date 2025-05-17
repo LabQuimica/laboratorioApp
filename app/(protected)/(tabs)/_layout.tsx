@@ -110,6 +110,21 @@ export default function TabsLayout() {
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="calendar"
+        options={{
+          title: "Calendario",
+          tabBarIcon: ({ color, size, focused }) => (
+            <TabBarIcon
+              name="calendar"
+              color={color}
+              size={size}
+              focused={focused}
+            />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
