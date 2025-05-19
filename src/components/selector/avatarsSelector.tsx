@@ -9,7 +9,6 @@ import {
 import { SvgUri } from "react-native-svg";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -62,8 +61,6 @@ export default function AvatarsSelector() {
       className="flex-1 bg-white dark:bg-neutral-900"
       style={{ paddingTop: insets.top }}
     >
-      <StatusBar style="light" />
-
       {/* Drag Handle - Only place where sheet can be dismissed */}
       <View style={styles.dragHandleContainer}>
         <View style={styles.dragHandle} />
