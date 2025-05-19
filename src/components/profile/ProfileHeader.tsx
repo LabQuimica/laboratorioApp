@@ -1,9 +1,10 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { SvgUri } from "react-native-svg";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Badge } from "@/src/components/ui/Badge";
 import AvatarConfirmButton from "@/src/components/AvatarConfirmButton";
+import { useEffect, useState } from "react";
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL_AVATARS;
 
@@ -18,19 +19,46 @@ type UserType = {
 
 interface ProfileHeaderProps {
   user: UserType | null;
-  avatar: string | undefined;
-  hasChanges: boolean;
-  onSuccess: () => void;
   onLogout: () => Promise<void>;
 }
 
-export default function ProfileHeader({
-  user,
-  avatar,
-  hasChanges,
-  onSuccess,
-  onLogout,
-}: ProfileHeaderProps) {
+export default function ProfileHeader({ user, onLogout }: ProfileHeaderProps) {
+  // Get URL params
+  const params = useLocalSearchParams<{ selectedAvatar: string }>();
+  const DEFAULT_AVATAR = user?.img;
+
+  const [avatar, setAvatar] = useState(DEFAULT_AVATAR);
+  const [hasChanges, setHasChanges] = useState(false);
+
+  useEffect(() => {
+    // Set avatar from user initially
+    if (DEFAULT_AVATAR && !avatar) {
+      setAvatar(DEFAULT_AVATAR);
+    }
+  }, [DEFAULT_AVATAR]);
+
+  // Handle selected avatar from params
+  useEffect(() => {
+    if (params && params.selectedAvatar) {
+      if (params.selectedAvatar !== avatar) {
+        setAvatar(params.selectedAvatar);
+        setHasChanges(params.selectedAvatar !== DEFAULT_AVATAR);
+      }
+
+      setTimeout(() => {
+        if (params.selectedAvatar) {
+          router.setParams({});
+        }
+      }, 100);
+    }
+  }, [params, DEFAULT_AVATAR, avatar]);
+
+  const handleSuccess = () => {
+    setHasChanges(false);
+    // Ensure navigation stack is clean after confirming avatar
+    router.setParams({});
+  };
+
   const getRoleVariant = (
     role?: string
   ): "primary" | "progreso" | "success" => {
@@ -49,17 +77,7 @@ export default function ProfileHeader({
   };
 
   return (
-    <View className="p-6 pt-32">
-      {hasChanges && (
-        <View className="w-full mb-4">
-          <AvatarConfirmButton
-            userId={user?.id_user || 0}
-            avatar={avatar || ""}
-            onSuccess={onSuccess}
-          />
-        </View>
-      )}
-
+    <View className="p-6 pt-20">
       {/* Two column layout: Avatar left, User info right */}
       <View className="flex-row mb-6">
         {/* Left column - Avatar */}
@@ -113,6 +131,17 @@ export default function ProfileHeader({
           </TouchableOpacity>
         </View>
       </View>
+
+      {/* Confirm button - only shown when avatar changes */}
+      {hasChanges && (
+        <View className="w-full mb-4">
+          <AvatarConfirmButton
+            userId={user?.id_user || 0}
+            avatar={avatar || ""}
+            onSuccess={handleSuccess}
+          />
+        </View>
+      )}
     </View>
   );
 }

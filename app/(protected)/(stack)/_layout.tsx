@@ -51,7 +51,6 @@ export default function StackLayout() {
         <Stack.Screen
           name="avatars"
           options={{
-            headerShown: false,
             presentation: "formSheet",
             gestureDirection: "vertical",
             animation: "slide_from_bottom",

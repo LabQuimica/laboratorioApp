@@ -50,8 +50,11 @@ export default function AvatarsSelector() {
   };
 
   const handleConfirm = () => {
+    if (!selectedAvatar) return;
     router.back();
-    router.setParams({ selectedAvatar });
+    setTimeout(() => {
+      router.setParams({ selectedAvatar });
+    }, 100);
   };
 
   return (
