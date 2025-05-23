@@ -13,13 +13,10 @@ export default function PerfilScreen() {
   return (
     <View className="flex-1 bg-background dark:bg-background-dark">
       <ProfileHeader user={user} onLogout={handleLogout} />
-
-      {/* Content below the profile header */}
       <View className="w-full px-6">
-        <Text className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
-          Información Adicional
+        <Text className="text-lg font-semibold text-center text-gray-800 dark:text-white mb-2">
+          Mis Vales
         </Text>
-        {/* Add additional profile information here */}
       </View>
       <ValesAlumnoList userId={user?.id_user || 0} />
     </View>

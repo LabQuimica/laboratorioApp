@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useColorScheme } from "nativewind";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Badge } from "@/src/components/ui/Badge";
+import DowloadAlumno from "../pdf/DowloadAlumno";
 
 export const CardAlumno = ({ vale }: { vale: ValeAlumnoDetails }) => {
   const [materialesVisible, setMaterialesVisible] = useState(false);
@@ -79,7 +80,7 @@ export const CardAlumno = ({ vale }: { vale: ValeAlumnoDetails }) => {
 
       {/* Lista de materiales (desplegable) */}
       {materialesVisible && (
-        <View className="px-4 py-2 bg-white dark:bg-gray-900">
+        <View className="px-4 py-2 bg-white dark:bg-background-dark">
           {vale.practica.materiales.map((material, index) => (
             <View
               key={`${material.nombre_item}-${index}`}
@@ -104,13 +105,14 @@ export const CardAlumno = ({ vale }: { vale: ValeAlumnoDetails }) => {
 
               {material.observacion_item && (
                 <Text className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                  Observación: {material.observacion_item}
+                  Observación: {material.observacion_item || "Sin observación"}
                 </Text>
               )}
             </View>
           ))}
         </View>
       )}
+      <DowloadAlumno id={vale.id_vale.toString()} />
     </View>
   );
 };
