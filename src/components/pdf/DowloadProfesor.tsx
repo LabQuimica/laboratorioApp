@@ -1,11 +1,11 @@
 import { View, Text, TouchableOpacity, Linking } from "react-native";
 import { useToast } from "@/src/contexts/ToastContext";
 
-export default function DowloadAlumno({ id }: { id: string }) {
+export default function DowloadProfesor({ id }: { id: string }) {
   const { showToast } = useToast();
 
   const handleOpenLink = async () => {
-    const url = `http://192.168.1.91:3000/downloadVale/alumno?id=${id}`;
+    const url = `http://192.168.1.91:3000/downloadVale/profesor?id=${id}`;
     const supported = await Linking.canOpenURL(url);
     if (supported) {
       await Linking.openURL(url);

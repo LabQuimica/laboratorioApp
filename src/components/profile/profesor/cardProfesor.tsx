@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useColorScheme } from "nativewind";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Badge } from "@/src/components/ui/Badge";
-import DowloadAlumno from "../../pdf/DowloadAlumno";
+import DowloadProfesor from "../../pdf/DowloadProfesor";
 
 export const CardProfesor = ({ vale }: { vale: ValeProfesorDetails }) => {
   const [materialesVisible, setMaterialesVisible] = useState(false);
@@ -113,7 +113,7 @@ export const CardProfesor = ({ vale }: { vale: ValeProfesorDetails }) => {
           ))}
         </View>
       )}
-      <DowloadAlumno id={vale.id_practica_asignada.toString()} />
+      <DowloadProfesor id={vale.id_practica_asignada.toString()} />
     </View>
   );
 };
