@@ -28,3 +28,25 @@ export interface ValeAlumnoDetailsMateriale {
   observacion_item: string
   especial:string
 }
+
+export interface ValeProfesorDetails {
+  id_practica_asignada: number;
+  status_practica: string;
+  fecha_inicio: string;
+  fecha_fin: string;
+  nombre_grupo: string;
+  semestre_grupo: string;
+  id_practica: number;
+  nombre_practica: string;
+  materiales: ValeProfesorDetailsMaterial[];
+}
+export interface ValeProfesorDetailsMaterial {
+  nombre_item: string;
+  tipo_item: string;
+  ubicacion: string;
+  cantidad_unitaria: string;
+  observacion: string | null;
+  especial: string;
+  cantidad_total_necesaria: string;
+}
+

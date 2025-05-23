@@ -1,7 +1,8 @@
 import { View, Text } from "react-native";
 import { useAuthStore } from "@/src/stores/auth";
 import ProfileHeader from "@/src/components/profile/ProfileHeader";
-import { ValesAlumnoList } from "@/src/components/profile/ValesAlumnoList";
+import { ValesAlumnoList } from "@/src/components/profile/alumno/ValesAlumnoList";
+import { ValesProfesorList } from "@/src/components/profile/profesor/ValesProfesorList";
 
 export default function PerfilScreen() {
   const { user, logout } = useAuthStore();
@@ -18,7 +19,11 @@ export default function PerfilScreen() {
           Mis Vales
         </Text>
       </View>
-      <ValesAlumnoList userId={user?.id_user || 0} />
+      {user?.rol === "alumno" ? (
+        <ValesAlumnoList userId={user?.id_user || 0} />
+      ) : (
+        <ValesProfesorList userId={user?.id_user || 0} />
+      )}
     </View>
   );
 }
