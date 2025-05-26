@@ -6,7 +6,7 @@ import { useAuthStore } from "@/src/stores/auth";
 import { useRouter } from "expo-router";
 import { SvgUri } from "react-native-svg";
 
-type IconName = "home" | "person";
+type IconName = "home" | "person" | "calendar";
 
 export default function TabsLayout() {
   const { user } = useAuthStore();

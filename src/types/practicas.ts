@@ -13,3 +13,21 @@ export interface Practica {
   semestre: string;
   codigo: string;
 }
+
+export interface PracticaDetails {
+  id_practica: number;
+  nombre: string;
+  descripcion: string;
+  fecha_creacion: string;
+  fecha_modificacion: string;
+  materiales: Material[];
+}
+export interface Material {
+  nombre: string;
+  id_item: number;
+  cantidad: number;
+  especial: string;
+}
+
+
+

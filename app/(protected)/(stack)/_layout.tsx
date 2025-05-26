@@ -63,6 +63,16 @@ export default function StackLayout() {
             sheetElevation: 24,
           }}
         />
+        <Stack.Screen
+          name="practica_seleccionada"
+          options={{
+            title: "Practica Seleccionada",
+            headerShown: true,
+            presentation: "card",
+            headerTransparent: true,
+            headerTitleAlign: "center",
+          }}
+        />
       </Stack>
     </View>
   );
