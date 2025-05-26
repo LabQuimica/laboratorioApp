@@ -7,10 +7,11 @@ import {
   Pressable,
   ActivityIndicator,
 } from "react-native";
-import { Badge, BadgeVariant } from "../ui/Badge";
+
 import { useColorScheme } from "nativewind";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useToast } from "@/src/contexts/ToastContext";
+import { Badge, BadgeVariant } from "@/src/components/ui/Badge";
 
 export type StatusOption = {
   value: string;

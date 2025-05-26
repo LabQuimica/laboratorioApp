@@ -50,3 +50,24 @@ export const updateStatusPracticaAsignada = async (idPracticaAsignada: number, n
         throw error;
     }
 }
+
+export const updateFechasPracticaAsignada = async (
+    idPracticaAsignada: number, 
+    fechaInicio: string, 
+    fechaFin: string
+): Promise<any> => {
+    try {
+        const response = await axios.post(
+            `${API_URL}/practicas/updateFechasPracticaAsignada`,
+            {
+                id_practica_asignada: idPracticaAsignada,
+                fecha_inicio: fechaInicio,
+                fecha_fin: fechaFin
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error updating practice dates:', error);
+        throw error;
+    }
+}

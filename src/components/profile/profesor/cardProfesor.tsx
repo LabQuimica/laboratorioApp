@@ -3,12 +3,14 @@ import { ValeProfesorDetails } from "@/src/types/vale";
 import { useState } from "react";
 import { useColorScheme } from "nativewind";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { BadgeSelector } from "@/src/components/practicaSeleccionada.tsx/BadgeSelector";
 import { useUpdateStatusPracticaAsignada } from "@/src/hooks/practicas";
 import DowloadProfesor from "../../pdf/DowloadProfesor";
+import { ModificarFechasModal } from "./ModificarFechasModal";
+import { BadgeSelector } from "./BadgeSelector";
 
 export const CardProfesor = ({ vale }: { vale: ValeProfesorDetails }) => {
   const [materialesVisible, setMaterialesVisible] = useState(false);
+  const [modalFechasVisible, setModalFechasVisible] = useState(false);
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === "dark";
 
@@ -27,13 +29,45 @@ export const CardProfesor = ({ vale }: { vale: ValeProfesorDetails }) => {
           />
         </View>
 
-        <Text className="mb-1 text-gray-600 dark:text-gray-300">
-          Fecha de inicio: {vale.fecha_inicio}
-        </Text>
+        <View className=" border-gray-200 dark:border-gray-600 pt-4 space-y-2">
+          <View className="flex-row items-center justify-between">
+            <View className="flex-row items-center flex-1">
+              <View className="w-2 h-2 bg-blue-500 rounded-full mr-3" />
+              <Text className="text-gray-600 dark:text-gray-400 text-sm">
+                <Text className="font-semibold">Fecha de inicio: </Text>
+                {vale.fecha_inicio}
+              </Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => setModalFechasVisible(true)}
+              className="ml-2 p-1"
+            >
+              <Ionicons
+                name="create-outline"
+                size={18}
+                color={isDark ? "#60a5fa" : "#3b82f6"}
+              />
+            </TouchableOpacity>
+          </View>
 
-        <Text className="mb-1 text-gray-600 dark:text-gray-300">
-          Fecha de fin: {vale.fecha_fin}
-        </Text>
+          <View className="flex-row items-center justify-between">
+            <View className="flex-row items-center flex-1">
+              <View className="w-2 h-2 bg-green-500 rounded-full mr-3" />
+              <Text className="text-gray-600 dark:text-gray-400 text-sm">
+                <Text className="font-semibold">Fecha de fin: </Text>
+                {vale.fecha_fin}
+              </Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => setModalFechasVisible(true)}
+              className="ml-2 p-1"
+            >
+              <Text className="text-blue-500 text-xs font-medium">
+                Modificar fechas
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
 
       {/* Información de la práctica */}
@@ -114,6 +148,15 @@ export const CardProfesor = ({ vale }: { vale: ValeProfesorDetails }) => {
         </View>
       )}
       <DowloadProfesor id={vale.id_practica_asignada.toString()} />
+
+      {/* Modal para modificar fechas */}
+      <ModificarFechasModal
+        visible={modalFechasVisible}
+        onClose={() => setModalFechasVisible(false)}
+        fechaInicio={vale.fecha_inicio}
+        fechaFin={vale.fecha_fin}
+        idPracticaAsignada={vale.id_practica_asignada}
+      />
     </View>
   );
 };
