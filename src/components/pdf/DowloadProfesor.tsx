@@ -9,7 +9,6 @@ export default function DowloadProfesor({ id }: { id: string }) {
     const supported = await Linking.canOpenURL(url);
     if (supported) {
       await Linking.openURL(url);
-      showToast("Vale descargado correctamente", "success");
     } else {
       showToast("No se puede abrir la URL: " + url, "error");
     }

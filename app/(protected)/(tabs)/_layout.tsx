@@ -97,21 +97,6 @@ export default function TabsLayout() {
       />
 
       <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Perfil",
-          tabBarIcon: ({ color, size, focused }) => (
-            <TabBarIcon
-              name="person"
-              color={color}
-              size={size}
-              focused={focused}
-            />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
         name="calendar"
         options={{
           title: "Calendario",

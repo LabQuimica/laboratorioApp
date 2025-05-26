@@ -126,7 +126,7 @@ export default function PracticaSeleccionada() {
             </View>
           )}
         </View>
-        {status === "pendiente" && (
+        {status === "pendiente" && user?.rol === "alumno" && (
           <View className="flex-1 bg-white dark:bg-gray-900">
             <TouchableOpacity
               onPress={handleInscribirme}
