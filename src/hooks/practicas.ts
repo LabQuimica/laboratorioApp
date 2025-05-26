@@ -58,7 +58,6 @@ export function useUpdateFechasPracticaAsignada() {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['valesProfesor'] });
             queryClient.invalidateQueries({ queryKey: ['practicasDetalle'] });
-            queryClient.invalidateQueries({ queryKey: ['practicasAlumno'] });
         },
         onError: (error) => {
             console.error('Error updating practice dates:', error);
