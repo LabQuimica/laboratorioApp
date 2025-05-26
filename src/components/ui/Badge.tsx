@@ -7,6 +7,9 @@ export type BadgeVariant =
   | "progreso"
   | "success"
   | "pendiente"
+  | "completada"
+  | "cancelada"
+  | "inhabilitada"
   | "danger";
 
 export interface BadgeProps {
@@ -45,6 +48,21 @@ export function Badge({
         return {
           container: "bg-amber-300",
           text: "text-amber-950",
+        };
+      case "completada":
+        return {
+          container: "bg-green-300",
+          text: "text-green-950",
+        };
+      case "cancelada":
+        return {
+          container: "bg-red-300",
+          text: "text-red-950",
+        };
+      case "inhabilitada":
+        return {
+          container: "bg-gray-300",
+          text: "text-gray-800",
         };
       case "danger":
         return {

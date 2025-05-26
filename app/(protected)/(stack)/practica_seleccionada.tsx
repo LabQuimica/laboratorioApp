@@ -11,8 +11,8 @@ import {
   usePracticasDetalle,
   useInscribirsePractica,
 } from "@/src/hooks/practicas";
-import { MaterialCard } from "@/src/components/MaterialCard";
-import { PracticaHeader } from "@/src/components/PracticaHeader";
+import { MaterialCard } from "@/src/components/practicaSeleccionada.tsx/MaterialCard";
+import { PracticaHeader } from "@/src/components/practicaSeleccionada.tsx/PracticaHeader";
 import { useAuthStore } from "@/src/stores/auth";
 import { useToast } from "@/src/contexts/ToastContext";
 

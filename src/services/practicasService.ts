@@ -38,3 +38,15 @@ export const inscribirsePractica = async (idPracticaAsignada: number, idAlumno: 
         throw error;
     }
 }
+
+export const updateStatusPracticaAsignada = async (idPracticaAsignada: number, newStatus: string): Promise<any> => {
+    try {
+        const response = await axios.post(
+            `${API_URL}/practicas/updateStatusPracticaAsignada?id_practica_asignada=${idPracticaAsignada}&newStatus=${newStatus}`
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error updating practice status:', error);
+        throw error;
+    }
+}

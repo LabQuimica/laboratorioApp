@@ -3,7 +3,8 @@ import { ValeProfesorDetails } from "@/src/types/vale";
 import { useState } from "react";
 import { useColorScheme } from "nativewind";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Badge } from "@/src/components/ui/Badge";
+import { BadgeSelector } from "@/src/components/practicaSeleccionada.tsx/BadgeSelector";
+import { useUpdateStatusPracticaAsignada } from "@/src/hooks/practicas";
 import DowloadProfesor from "../../pdf/DowloadProfesor";
 
 export const CardProfesor = ({ vale }: { vale: ValeProfesorDetails }) => {
@@ -19,11 +20,10 @@ export const CardProfesor = ({ vale }: { vale: ValeProfesorDetails }) => {
           <Text className="font-bold text-lg text-black dark:text-white">
             Vale #{vale.id_practica_asignada}
           </Text>
-          <Badge
-            variant={
-              vale.status_practica.toLowerCase() as "progreso" | "pendiente"
-            }
-            label={vale.status_practica}
+          <BadgeSelector
+            currentStatus={vale.status_practica}
+            idPracticaAsignada={vale.id_practica_asignada}
+            useMutationHook={useUpdateStatusPracticaAsignada}
           />
         </View>
 
