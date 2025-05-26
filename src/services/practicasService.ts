@@ -26,3 +26,15 @@ export const getPracticasDetalles = async (practicaId: number): Promise<Practica
         throw error;
     }
 }
+
+export const inscribirsePractica = async (idPracticaAsignada: number, idAlumno: number): Promise<any> => {
+    try {
+        const response = await axios.post(
+            `${API_URL}/practicas/inscribemePractica?id_practica_asignada=${idPracticaAsignada}&id_alumno=${idAlumno}`
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error enrolling in practice:', error);
+        throw error;
+    }
+}

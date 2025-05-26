@@ -4,23 +4,47 @@ import {
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { usePracticasDetalle } from "@/src/hooks/practicas";
+import {
+  usePracticasDetalle,
+  useInscribirsePractica,
+} from "@/src/hooks/practicas";
 import { MaterialCard } from "@/src/components/MaterialCard";
 import { PracticaHeader } from "@/src/components/PracticaHeader";
+import { useAuthStore } from "@/src/stores/auth";
+import { useToast } from "@/src/contexts/ToastContext";
 
 export default function PracticaSeleccionada() {
   const { practica, status } = useLocalSearchParams<{
     practica: string;
     status: string;
   }>();
+  const { showToast } = useToast();
 
   const { data, isLoading, error } = usePracticasDetalle(parseInt(practica));
+  const { user } = useAuthStore();
+  const inscribirseMutation = useInscribirsePractica();
 
-  const handleInscribirme = () => {
-    console.log("Inscribirme a la práctica");
+  const handleInscribirme = async () => {
+    if (!user?.id_user || !data?.id_practica) {
+      showToast("No se puede inscribir a la práctica", "error");
+      return;
+    }
+
+    try {
+      await inscribirseMutation.mutateAsync({
+        idPracticaAsignada: data.id_practica,
+        idAlumno: user.id_user,
+      });
+
+      showToast("Te has inscrito correctamente a la práctica", "success");
+    } catch (error) {
+      showToast("Ya estás inscrito en esta práctica", "error");
+    }
   };
+
   if (isLoading) {
     return (
       <View className="flex-1 justify-center items-center bg-gray-50 dark:bg-gray-900">
@@ -106,11 +130,25 @@ export default function PracticaSeleccionada() {
           <View className="flex-1 bg-white dark:bg-gray-900">
             <TouchableOpacity
               onPress={handleInscribirme}
-              className="m-4 p-4 bg-primary  rounded-lg"
+              disabled={inscribirseMutation.isPending}
+              className={`m-4 p-4 rounded-lg ${
+                inscribirseMutation.isPending
+                  ? "bg-gray-400 dark:bg-gray-600"
+                  : "bg-primary"
+              }`}
             >
-              <Text className="text-white text-center font-semibold">
-                Inscribirme a la práctica
-              </Text>
+              {inscribirseMutation.isPending ? (
+                <View className="flex-row justify-center items-center">
+                  <ActivityIndicator size="small" color="white" />
+                  <Text className="text-white text-center font-semibold ml-2">
+                    Inscribiendo...
+                  </Text>
+                </View>
+              ) : (
+                <Text className="text-white text-center font-semibold">
+                  Inscribirme a la práctica
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
         )}
