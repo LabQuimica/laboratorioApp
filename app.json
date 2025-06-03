@@ -40,7 +40,7 @@
           }
         }
       ],
-      
+
       "expo-secure-store"
     ],
     "experiments": {
