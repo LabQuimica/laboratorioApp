@@ -71,3 +71,13 @@ export const getPracticasCreadas = async (): Promise<Practica[]> => {
     throw error;
   }
 };
+
+export const getNewPracticas= async (alumnoId: number): Promise<Practica[]> => {
+  try {
+    const response = await axios.get<Practica[]>(`${API_URL}/practicas/getNewPracticasAsignadas/${alumnoId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting recent practices:", error);
+    throw error;
+  }
+};

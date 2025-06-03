@@ -40,11 +40,15 @@
           }
         }
       ],
-
       "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7e349abb-6129-491d-8634-0f943a0bd695"
+      }
     }
   }
 }
