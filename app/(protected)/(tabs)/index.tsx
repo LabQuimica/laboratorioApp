@@ -8,7 +8,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 
 const getInitials = (name: string | undefined) => {
@@ -22,7 +22,7 @@ const getInitials = (name: string | undefined) => {
 
 export default function Home() {
   const { user, logout } = useAuthStore();
-  const { data: grupos, isLoading, error } = useGruposByUsuario(user!.id_user);
+  const { data: grupos, isLoading, error } = useGruposByUsuario(user?.id_user);
 
   const router = useRouter();
   const handleAddPress = () => {
@@ -30,7 +30,7 @@ export default function Home() {
   };
 
   const handleNotifications = () => {
-    router.push('/notificaciones');
+    router.push("/notificaciones");
   };
 
   if (isLoading) {
@@ -53,11 +53,14 @@ export default function Home() {
     <View className="flex-1 bg-background dark:bg-background-dark p-8">
       <View className="flex-row justify-between items-center mb-6">
         <Text className="text-white text-4xl font-bold">Materias</Text>
-        {user?.rol == "alumno" &&
-          <TouchableOpacity onPress={handleNotifications} className="bg-primary p-3 rounded-full">
+        {user?.rol == "alumno" && (
+          <TouchableOpacity
+            onPress={handleNotifications}
+            className="bg-primary p-3 rounded-full"
+          >
             <Ionicons name="notifications" size={25} color="white" />
           </TouchableOpacity>
-        }
+        )}
       </View>
 
       <ScrollView>
@@ -77,11 +80,14 @@ export default function Home() {
         ))}
       </ScrollView>
 
-      {user?.rol === "profesor" &&
-        <TouchableOpacity onPress={handleAddPress} className="absolute w-16 h-16 align-middle justify-center items-center right-5 bottom-10 rounded-full bg-primary elevation-md">
+      {user?.rol === "profesor" && (
+        <TouchableOpacity
+          onPress={handleAddPress}
+          className="absolute w-16 h-16 align-middle justify-center items-center right-5 bottom-10 rounded-full bg-primary elevation-md"
+        >
           <Ionicons name="add" size={30} color="white" />
         </TouchableOpacity>
-      }
+      )}
     </View>
   );
 }

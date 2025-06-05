@@ -6,7 +6,11 @@ import { CardAlumno } from "../alumno/cardAlumno";
 import { useValesProfesor } from "@/src/hooks/useValesProfesor";
 import { CardProfesor } from "./cardProfesor";
 
-export const ValesProfesorList = ({ userId }: { userId: number }) => {
+export const ValesProfesorList = ({
+  userId,
+}: {
+  userId: number | undefined;
+}) => {
   const { data, isLoading, isError, error, refetch } = useValesProfesor(userId);
   const [refreshing, setRefreshing] = useState(false);
 

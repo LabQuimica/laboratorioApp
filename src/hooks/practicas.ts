@@ -6,6 +6,7 @@ export function usePracticasAlumno(alumnoId?: number) {
     return useQuery<Practica[]>({
         queryKey: ['practicasAlumno'],
         queryFn: () => getPracticas(alumnoId!),
+        enabled: !!alumnoId,
     })
 }
 
@@ -13,6 +14,7 @@ export function usePracticasDetalle(practicaId?: number) {
     return useQuery<PracticaDetails>({
         queryKey: ['practicasDetalle'],
         queryFn: () => getPracticasDetalles(practicaId!),
+        enabled: !!practicaId,
     })
 }
 

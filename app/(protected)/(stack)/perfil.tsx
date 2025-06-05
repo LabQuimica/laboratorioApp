@@ -20,9 +20,9 @@ export default function PerfilScreen() {
         </Text>
       </View>
       {user?.rol === "alumno" ? (
-        <ValesAlumnoList userId={user?.id_user || 0} />
+        <ValesAlumnoList userId={user?.id_user} />
       ) : (
-        <ValesProfesorList userId={user?.id_user || 0} />
+        <ValesProfesorList userId={user?.id_user} />
       )}
     </View>
   );

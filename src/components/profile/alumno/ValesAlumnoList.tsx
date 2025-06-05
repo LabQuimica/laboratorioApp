@@ -5,7 +5,7 @@ import { useValesAlumno } from "@/src/hooks/useValesAlumno";
 import { ValeAlumnoDetails } from "@/src/types/vale";
 import { CardAlumno } from "./cardAlumno";
 
-export const ValesAlumnoList = ({ userId }: { userId: number }) => {
+export const ValesAlumnoList = ({ userId }: { userId: number | undefined }) => {
   const { data, isLoading, isError, error, refetch } = useValesAlumno(userId);
   const [refreshing, setRefreshing] = useState(false);
 

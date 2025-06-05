@@ -9,10 +9,10 @@ export const useGrupos = () => {
     });
 };
 
-export const useGruposByUsuario = (idAlumno: number) => {
+export const useGruposByUsuario = (idAlumno: number | undefined) => {
     return useQuery<Grupo[], Error>({
         queryKey: ["gruposByAlumno", idAlumno],
-        queryFn: () => fetchGruposByUsuario(idAlumno),
+        queryFn: () => fetchGruposByUsuario(idAlumno!),
         enabled: !!idAlumno,
     });
 };
