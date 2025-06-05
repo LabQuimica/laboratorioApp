@@ -1,6 +1,6 @@
 export interface Practica {
   id_practica: number;
-  practica_nombre: string;
+  nombre: string;
   descripcion: string;
   fecha_creacion: string;
   fecha_modificacion: string;

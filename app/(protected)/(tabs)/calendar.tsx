@@ -42,15 +42,17 @@ const getColorByTime = (fechaInicio: string, fechaFin: string): string => {
 };
 
 const CustomCalendar: React.FC = () => {
+   // Obtener fecha actual
+  const today = new Date();
+  const todayString = today.toISOString().split('T')[0];
+
   const [selected, setSelected] = useState<string>("");
   const [markedDates, setMarkedDates] = useState<MarkedDates>({});
 
+  const [isWeekView, setIsWeekView] = useState(false);
+
   const { user } = useAuthStore();
-
-  // Obtener fecha actual
-  const today = new Date();
-  const todayString = today.toISOString().split("T")[0];
-
+  
   const {
     data: practicas,
     isLoading,
@@ -117,6 +119,27 @@ const CustomCalendar: React.FC = () => {
       setMarkedDates(newMarkedDates);
     }
   }, [practicas, selected, todayString]);
+
+  const getDisplayDate = () => {
+    return selected || todayString;
+  };
+
+  const getHeaderText = () => {
+    const displayDate = getDisplayDate();
+    const isToday = displayDate === todayString;
+    
+    if (isToday) {
+      return 'Hoy';
+    } else {
+      const [year, month, day] = displayDate.split('-').map(Number);
+      const dateObj = new Date(year, month - 1, day);
+      
+      const weekday = dateObj.toLocaleDateString('es-MX', { 
+        weekday: 'long' 
+      });
+      return weekday.charAt(0).toUpperCase() + weekday.slice(1);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -249,14 +272,18 @@ const CustomCalendar: React.FC = () => {
       {selected && practicas && (
         <ScrollView className="mt-6 px-4">
           <View className="flex flex-row items-center mb-5">
-            <Text className="text-black dark:text-white text-5xl font-bold mr-7">
-              Hoy
-            </Text>
-            <Text className="text-black dark:text-white text-xl font-thin">
-              {new Date(selected).toLocaleDateString("es-MX", {
-                day: "numeric",
-                month: "long",
-              })}
+            <Text className="text-black dark:text-white text-5xl font-bold mr-7">{getHeaderText()}</Text>
+            <Text className='text-black dark:text-white text-xl font-thin'>
+              {(() => {
+                const displayDate = getDisplayDate();
+                const [year, month, day] = displayDate.split('-').map(Number);
+                const dateObj = new Date(year, month - 1, day);
+                return dateObj.toLocaleDateString('es-MX', { 
+                  day: 'numeric', 
+                  month: 'long',
+                  timeZone: 'America/Mexico_City'
+                });
+              })()}
             </Text>
           </View>
 
@@ -318,7 +345,7 @@ const CustomCalendar: React.FC = () => {
                       >
                         <View className="bg-[#3D539F] dark:bg-[#1E1E2F] rounded-xl px-4 py-2 shadow-md">
                           <Text className="text-white font-semibold text-sm">
-                            {practica.practica_nombre}
+                            {practica.nombre}
                           </Text>
                           <Text className="text-gray-300 text-xs">
                             {practica.grupo_nombre}

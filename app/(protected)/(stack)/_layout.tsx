@@ -1,4 +1,5 @@
 import ThemeSelector from "@/src/components/selector/themeSelector";
+import { Ionicons } from "@expo/vector-icons";
 import { Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { View } from "react-native";
@@ -70,6 +71,16 @@ export default function StackLayout() {
             headerShown: true,
             presentation: "card",
             headerTransparent: true,
+            headerTitleAlign: "center",
+          }}
+        />
+
+        <Stack.Screen
+          name="practicas-materia"
+          options={{
+            title: "Grupo",
+            headerShown: true,
+            presentation: "card",
             headerTitleAlign: "center",
           }}
         />
