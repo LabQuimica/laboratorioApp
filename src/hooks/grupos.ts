@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Grupo } from '../types/grupos';
-import { fetchGrupos, fetchGruposByAlumno } from '../services/gruposService';
+import { fetchGrupos, fetchGruposByUsuario } from '../services/gruposService';
 
 export const useGrupos = () => {
     return useQuery<Grupo[], Error>({
@@ -9,10 +9,10 @@ export const useGrupos = () => {
     });
 };
 
-export const useGruposByAlumno = (idAlumno: number) => {
+export const useGruposByUsuario = (idAlumno: number) => {
     return useQuery<Grupo[], Error>({
         queryKey: ["gruposByAlumno", idAlumno],
-        queryFn: () => fetchGruposByAlumno(idAlumno),
+        queryFn: () => fetchGruposByUsuario(idAlumno),
         enabled: !!idAlumno,
     });
 };

@@ -16,10 +16,10 @@ export const fetchGrupos = async () => {
     }
 };
 
-export const fetchGruposByAlumno = async (idAlumno: number): Promise<Grupo[]> => {
+export const fetchGruposByUsuario = async (idAlumno: number): Promise<Grupo[]> => {
     try {
         const response = await axios.get<Grupo[]>(
-            `${API_URL}/grupos/getGruposByAlumno/${idAlumno}`
+            `${API_URL}/grupos/getGruposByUsuario/${idAlumno}`
         );
         return response.data;
     } catch (error) {
