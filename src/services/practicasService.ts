@@ -107,7 +107,6 @@ export const asignarPractica = async (newPracticaAsignada: {
   }
 };
 
-
 export const getPracticasByGrupo = async (grupoId: number): Promise<Practica[]> => {
   try {
     const response = await axios.get<Practica[]>(`${API_URL}/practicas/getPracticasByGroup/${grupoId}`);
@@ -117,7 +116,6 @@ export const getPracticasByGrupo = async (grupoId: number): Promise<Practica[]> 
     throw error;
   }
 };
-
 
 export const getPracticasCreadas = async (): Promise<Practica[]> => {
   try {
@@ -131,7 +129,7 @@ export const getPracticasCreadas = async (): Promise<Practica[]> => {
   }
 };
 
-export const getNewPracticas = async (alumnoId: number): Promise<Practica[]> => {
+export const getNewPracticas= async (alumnoId: number): Promise<Practica[]> => {
   try {
     const response = await axios.get<Practica[]>(`${API_URL}/practicas/getNewPracticasAsignadas/${alumnoId}`);
     return response.data;

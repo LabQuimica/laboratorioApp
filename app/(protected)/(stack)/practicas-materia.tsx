@@ -5,6 +5,7 @@ import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 export default function PracticasMateria() {
   const { nombre, id_grupo } = useLocalSearchParams();

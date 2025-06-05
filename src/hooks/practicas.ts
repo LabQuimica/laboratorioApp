@@ -83,7 +83,6 @@ export function usePracticasPorGrupo(grupoId?: number) {
   });
 }
 
-
 export function usePracticasCreadas() {
   return useQuery<Practica[]>({
     queryKey: ["practicasCreadas"],
